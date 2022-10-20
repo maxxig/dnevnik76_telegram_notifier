@@ -40,7 +40,6 @@ def replace_month_in_date(item):
 def login_to_dnevnik76(driver, login, password, logger):
     driver.get('https://my.dnevnik76.ru/accounts/login/')
     time.sleep(3)
-    print('1')
     element = driver.find_element(By.XPATH, "//div[contains(@class,'custom-select__selected')]")
     element.click()
     time.sleep(3)
