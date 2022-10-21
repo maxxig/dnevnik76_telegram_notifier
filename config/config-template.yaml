@@ -1,12 +1,13 @@
 users:
     5v:
-      active: false
-      login: 00000000
-      password: 222222
-      region: 76000001000/3
-      school: 760218
-      chat_id: -8888888
-      prev_version_file_name: prev_version_5v.json
+      active: false #on/off check
+      login: 00000000 #student login
+      password: 222222 #student password
+      region: 76000001000/3 # html div element with this data-value - //div[contains(@data-value,'{region}')]
+      school: 760218 # html div element with this data-value - //div[contains(@data-value,'{school}')]
+      chat_id: -8888888 # telegram chat id, can get in bot https://t.me/username_to_id_bot
+      hours: 8-11,15-21 # not to send messages during school hours, start/stop - delimiter = '-', several periods delimiter = ','
+      prev_version_file_name: prev_version_5v.json # if previous timetable not chanched - not send message, prev message in file with this name
     3d:
       active: true
       login: 11111111
@@ -14,7 +15,8 @@ users:
       region: 76000001000/3
       school: 760206
       chat_id: -777777777
+      hours: 15-21
       prev_version_file_name: prev_version_3d.json
-TOKEN: token123
+TOKEN: token123 #telega token
 log_path: log.log
-admin_chai_id: 444444444
+admin_chai_id: 444444444 # send message if bot has exeption to this telegramm accaunt
