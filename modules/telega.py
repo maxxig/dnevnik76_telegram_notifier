@@ -1,10 +1,12 @@
 import telegram
+#import logging
 #from telegram.ext import Updater
 #from telegram.ext import CommandHandler
 #from telegram.ext import MessageHandler, Filters
-#TOKEN = ''
-#updater = Updater(token=TOKEN)
-#dispatcher = updater.dispatcher
+#
+# updater = Updater(token='')
+# dispatcher = updater.dispatcher
+
 
 def send(msg, chat_id, token):
     bot = telegram.Bot(token=token)
@@ -27,8 +29,8 @@ def send(msg, chat_id, token):
 #     #     else: text = 'Ты говоришь: '+update.message.text + '. Да я говорю: '+update.message.text +'. Дак рассказать тебе сказку про белого бычка?'
 #     #     context.bot.send_message(chat_id=update.effective_chat.id,text=text)
 #start_handler = CommandHandler('start2',start)
-#echo_handker = MessageHandler(Filters.text & (~Filters.command), echo)
+# echo_handker = MessageHandler(Filters.text & (~Filters.command), echo)
 
 #dispatcher.add_handler(start_handler)
-#dispatcher.add_handler(echo_handker)
-#updater.start_polling()
+# dispatcher.add_handler(echo_handker)
+# updater.start_polling()

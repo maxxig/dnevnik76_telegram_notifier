@@ -26,9 +26,9 @@ RU_MONTH_VALUES = {
 
 def init_webdrv():
     options = Options()
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
+    # options.add_argument('--headless')
+    # options.add_argument('--no-sandbox')
+    # options.add_argument('--disable-dev-shm-usage')
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 def replace_month_in_date(item):
@@ -37,13 +37,13 @@ def replace_month_in_date(item):
         item = item.replace(k, str(v))
     return item
 
-def login_to_dnevnik76(driver, login, password):
+def login_to_dnevnik76(driver, login, password, region, school):
     driver.get('https://my.dnevnik76.ru/accounts/login/')
-    time.sleep(3)
+    #time.sleep(3)
     element = driver.find_element(By.XPATH, "//div[contains(@class,'custom-select__selected')]")
     element.click()
     time.sleep(3)
-    element = driver.find_element(By.XPATH, "//div[contains(@data-value,'76000001000/3')]")
+    element = driver.find_element(By.XPATH, f"//div[contains(@data-value,'{region}')]")
     actions = ActionChains(driver)
     actions.move_to_element(element).perform()
     element.click()
@@ -51,7 +51,7 @@ def login_to_dnevnik76(driver, login, password):
     element = driver.find_element(By.XPATH, "(//div[contains(@class,'custom-select__selected')])[2]")
     element.click()
     time.sleep(3)
-    element = driver.find_element(By.XPATH, "//div[contains(@data-value,'760218')]")
+    element = driver.find_element(By.XPATH, f"//div[contains(@data-value,'{school}')]")
     actions = ActionChains(driver)
     actions.move_to_element(element).perform()
     time.sleep(2)

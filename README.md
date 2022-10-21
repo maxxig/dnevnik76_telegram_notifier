@@ -10,6 +10,7 @@ pip install selenium webdriver-manager
 pip install python-telegram-bot
 pip install bs4
 pip install packaging
+pip install pyyaml
 maybe something else ;)
 
 sudo apt install google-chrome-stable

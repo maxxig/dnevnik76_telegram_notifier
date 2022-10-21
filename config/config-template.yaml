@@ -1,0 +1,20 @@
+users:
+    5v:
+      active: false
+      login: 00000000
+      password: 222222
+      region: 76000001000/3
+      school: 760218
+      chat_id: -8888888
+      prev_version_file_name: prev_version_5v.json
+    3d:
+      active: true
+      login: 11111111
+      password: 222222
+      region: 76000001000/3
+      school: 760206
+      chat_id: -777777777
+      prev_version_file_name: prev_version_3d.json
+TOKEN: token123
+log_path: log.log
+admin_chai_id: 444444444
