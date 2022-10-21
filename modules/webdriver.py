@@ -26,9 +26,9 @@ RU_MONTH_VALUES = {
 
 def init_webdrv():
     options = Options()
-    # options.add_argument('--headless')
-    # options.add_argument('--no-sandbox')
-    # options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 def replace_month_in_date(item):
@@ -39,7 +39,7 @@ def replace_month_in_date(item):
 
 def login_to_dnevnik76(driver, login, password, region, school):
     driver.get('https://my.dnevnik76.ru/accounts/login/')
-    #time.sleep(3)
+    time.sleep(3)
     element = driver.find_element(By.XPATH, "//div[contains(@class,'custom-select__selected')]")
     element.click()
     time.sleep(3)
@@ -71,9 +71,10 @@ def login_to_dnevnik76(driver, login, password, region, school):
 
 def get_timetable(driver):
     driver.get('https://my.dnevnik76.ru/homework/')
-    time.sleep(1)
+    time.sleep(2)
     element = driver.find_element(By.XPATH, "//select[contains(@id,'items_perpage')]")
     element.click()
+    time.sleep(1)
     element = driver.find_element(By.XPATH, "//select[contains(@id,'items_perpage')]//option[contains(@value,'50')]")
     element.click()
     time.sleep(1)
