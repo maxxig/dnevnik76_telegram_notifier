@@ -83,7 +83,7 @@ def get_timetable(driver):
     table_data = list(filter(lambda y: y[2] != '- ' and len(y[2].strip())>1, list(
         map(lambda x: [datetime.strptime(replace_month_in_date(x[0]), '%d %m %Y г.').strftime('%d.%m.%Y'), x[2], x[3]], table_data))))
     timetable_dict = {}
-    for item in table_data:
+    for item in sorted(table_data, key=lambda x:(x[0], x[1], x[2]), reverse=True):
         if item[0] not in timetable_dict:
             timetable_dict[item[0]] = {item[1]: item[2]}
         elif item[1] not in timetable_dict[item[0]]:
