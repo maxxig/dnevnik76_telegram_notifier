@@ -26,9 +26,9 @@ RU_MONTH_VALUES = {
 
 def init_webdrv():
     options = Options()
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
+    # options.add_argument('--headless')
+    # options.add_argument('--no-sandbox')
+    # options.add_argument('--disable-dev-shm-usage')
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 def replace_month_in_date(item):
@@ -93,3 +93,36 @@ def get_timetable(driver):
 
     timetable_dict = dict(islice(timetable_dict.items(), 3))
     return timetable_dict, driver
+
+def get_scores_for_user(driver, selector):
+    driver.get(f'https://my.dnevnik76.ru/marks/current/{selector}/list/')
+    time.sleep(1)
+    h3 = driver.find_element(By.XPATH, "//h3").text
+    scores_div = driver.find_element(By.XPATH, "//div[contains(@id,'marks')]")
+    all_list = BeautifulSoup(scores_div.get_attribute("outerHTML"), "html.parser").select("div#mark-row")
+    result = []
+    for all in all_list:
+        class_name = all.select_one("div", class_name = 'mark-label').text.strip()
+        scores = list(map(lambda x: set_color_for_score(x),[s.text.strip() for s in all.select("span", class_name='mark')]))
+        scores_text = ', '.join([s for s in scores])
+        result.append(f'{class_name}: {scores_text}')
+    return result, h3
+
+
+def set_color_for_score(x):
+    #color don't work in telegram :(
+    x = x.replace(',','.')
+    if is_number_tryexcept(x) and float(x) >= 4:
+        return f'{x}'
+    elif is_number_tryexcept(x) and float(x) >= 1:
+        return f'<b>{x}</b>'
+    else:
+        x = x.upper()
+    return x
+
+def is_number_tryexcept(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False

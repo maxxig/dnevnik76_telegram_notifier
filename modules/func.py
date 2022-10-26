@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import json, os.path
+import config.config_yaml
+
 from datetime import datetime
 def check_previous_version(new_data, filename):
+
     old_data = {}
     if os.path.exists(filename):
         with open(filename,'r', encoding='utf-8') as file:

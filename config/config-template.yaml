@@ -1,5 +1,6 @@
 users:
     5v:
+      name: name
       active: false #on/off check
       login: 00000000 #student login
       password: 222222 #student password
@@ -8,7 +9,11 @@ users:
       chat_id: -8888888 # telegram chat id, can get in bot https://t.me/username_to_id_bot
       hours: 8-11,15-21 # not to send messages during school hours, start/stop - delimiter = '-', several periods delimiter = ','
       prev_version_file_name: prev_version_5v.json # if previous timetable not chanched - not send message, prev message in file with this name
+      check_scores: true #activate check process
+      period_filter_selector: #html select element for apply filter, can be different for classes
+      personal_chats_id: 6666666,77665454 #parents chat for notification
     3d:
+      name: name
       active: true
       login: 11111111
       password: 222222
@@ -17,6 +22,9 @@ users:
       chat_id: -777777777
       hours: 15-21
       prev_version_file_name: prev_version_3d.json
+      check_scores: false
+      period_filter_selector: edurng11385
+      personal_chats_id: 6666666,77665454
 TOKEN: token123 #telega token
 log_path: log.log
 admin_chai_id: 444444444 # send message if bot has exeption to this telegramm accaunt

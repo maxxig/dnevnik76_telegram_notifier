@@ -1,6 +1,5 @@
 import yaml
-
-def get_config():
+def init():
+    global config_global
     with open('config/config.yaml') as f:
-        config = yaml.safe_load(f)
-    return config
+        config_global = yaml.safe_load(f)
