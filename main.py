@@ -51,12 +51,9 @@ try:
                             tlg.send(message_for_parents, parent, token=cnfg['TOKEN'])
                         except Exception as e:
                             logger.critical(e, exc_info=True)
-
-
             driver.close()
         logger.info(f'{datetime.now()}: End processing {user_code}.')
 except BaseException as e:
-    driver.close()
     logger.critical(e, exc_info=True)
     tlg.send(e.args[0], cnfg['admin_chai_id'], token=cnfg['TOKEN'])
     print(e)
