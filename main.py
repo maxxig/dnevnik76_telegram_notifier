@@ -37,7 +37,7 @@ try:
 
             if len(timetable_dict) > 0 and is_new_value:
                 logger.info(f'{datetime.now()}: Send message to telegram')
-                #tlg.send(msg.timetable_message(timetable_dict),info_item['chat_id'], token=cnfg['TOKEN'])
+                tlg.send(msg.timetable_message(timetable_dict),info_item['chat_id'], token=cnfg['TOKEN'])
 
             if info_item['check_scores'] == True:
                 logger.info(f'{datetime.now()}: check_scores = true')
@@ -46,7 +46,7 @@ try:
                 logger.info(f'{datetime.now()}: check_scores = true, is_new_value = {is_new_value}')
                 if is_new_value:
                     message_for_parents = msg.scores_to_message(scores_array,info_item['name'], h3)
-                    for parent in str(cnfg['admin_chai_id']).split(','):
+                    for parent in str(cnfg['personal_chats_id']).split(','):
                         try:
                             tlg.send(message_for_parents, parent, token=cnfg['TOKEN'])
                         except Exception as e:

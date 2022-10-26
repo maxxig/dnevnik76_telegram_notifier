@@ -4,7 +4,8 @@ import config.config_yaml
 
 from datetime import datetime
 def check_previous_version(new_data, filename):
-
+    if config.config_yaml.config_global['path_for_files'] != None and len(config.config_yaml.config_global['path_for_files'])>3:
+        filename = config.config_yaml.config_global['path_for_files'] + '/' + filename
     old_data = {}
     if os.path.exists(filename):
         with open(filename,'r', encoding='utf-8') as file:
