@@ -3,18 +3,29 @@ import json, os.path
 import config.config_yaml
 
 from datetime import datetime
-def check_previous_version(new_data, filename):
-    if config.config_yaml.config_global['path_for_files'] != None and len(config.config_yaml.config_global['path_for_files'])>3:
+
+def mark_changed_score_list(old_data, new_data):
+    '''Marked class if scores changed or class added'''
+    for item in new_data:
+        if item in old_data:
+            if old_data[item] != new_data[item]:
+                new_data[item] += ' :bangbang:'
+        else:
+            new_data[item] += ' :bangbang:'
+    return new_data
+
+def get_previous_version(filename):
+    if config.config_yaml.config_global['path_for_files'] is not None and len(config.config_yaml.config_global['path_for_files']) > 3:
         filename = config.config_yaml.config_global['path_for_files'] + '/' + filename
-    old_data = {}
+    data = {}
     if os.path.exists(filename):
         with open(filename,'r', encoding='utf-8') as file:
-            old_data = json.load(file)
-    if new_data != old_data:
-        with open(filename, 'w', encoding='utf-8') as file:
-            json.dump(new_data, file, ensure_ascii=False)
-        return True
-    return False
+            data = json.load(file)
+    return data
+
+def save_new_version (new_data, filename):
+    with open(filename, 'w', encoding='utf-8') as file:
+        json.dump(new_data, file, ensure_ascii=False)
 
 def can_start(hours):
     hours_now = datetime.now().hour

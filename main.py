@@ -32,21 +32,34 @@ try:
             timetable_dict, driver = web_driver.get_timetable(driver)
 
             logger.info(f'{datetime.now()}: Exec check_previous_version()')
-            is_new_value = func.check_previous_version(timetable_dict, f"{info_item['prev_version_file_name']}")
+            # is_new_value = func.check_previous_version(timetable_dict, f"{info_item['prev_version_file_name']}")
+            old_data = func.get_previous_version(f"{info_item['prev_version_file_name']}")
+
+            is_new_value = True if old_data != timetable_dict else False
+
+            if is_new_value:
+                func.save_new_version(new_data=timetable_dict, filename = f"{info_item['prev_version_file_name']}")
+
             logger.info(f'{datetime.now()}: is_new_value = {is_new_value}')
 
             if len(timetable_dict) > 0 and is_new_value:
                 logger.info(f'{datetime.now()}: Send message to telegram')
-                tlg.send(msg.timetable_message(timetable_dict),info_item['chat_id'], token=cnfg['TOKEN'])
+                # tlg.send(msg.timetable_message(timetable_dict),info_item['chat_id'], token=cnfg['TOKEN'])
 
             if info_item['check_scores'] == True:
                 logger.info(f'{datetime.now()}: check_scores = true')
-                scores_array, h3 = web_driver.get_scores_for_user(driver, selector = info_item['period_filter_selector'])
-                is_new_value = func.check_previous_version(scores_array, f"scores_for_{info_item['name']}.json")
+                scores_dict, h3 = web_driver.get_scores_for_user(driver, selector = info_item['period_filter_selector'])
+                del old_data
+                old_data = func.get_previous_version(f"scores_for_{info_item['name']}.json")
+
+                # is_new_value = func.check_previous_version(scores_array, f"scores_for_{info_item['name']}.json")
+                is_new_value = True if old_data != scores_dict else False
+
                 logger.info(f'{datetime.now()}: check_scores = true, is_new_value = {is_new_value}')
                 if is_new_value:
-                    message_for_parents = msg.scores_to_message(scores_array,info_item['name'], h3)
-                    for parent in str(cnfg['personal_chats_id']).split(','):
+                    func.save_new_version(new_data=scores_dict, filename=f"scores_for_{info_item['name']}.json")
+                    message_for_parents = msg.scores_to_message(scores_dict, old_data, info_item['name'], h3)
+                    for parent in str(info_item['personal_chats_id']).split(','):
                         try:
                             tlg.send(message_for_parents, parent, token=cnfg['TOKEN'])
                         except Exception as e:
