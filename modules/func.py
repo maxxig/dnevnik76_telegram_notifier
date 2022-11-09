@@ -24,6 +24,8 @@ def get_previous_version(filename):
     return data
 
 def save_new_version (new_data, filename):
+    if config.config_yaml.config_global['path_for_files'] is not None and len(config.config_yaml.config_global['path_for_files']) > 3:
+        filename = config.config_yaml.config_global['path_for_files'] + '/' + filename
     with open(filename, 'w', encoding='utf-8') as file:
         json.dump(new_data, file, ensure_ascii=False)
 
