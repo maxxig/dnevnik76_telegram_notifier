@@ -44,7 +44,7 @@ try:
 
             if len(timetable_dict) > 0 and is_new_value:
                 logger.info(f'{datetime.now()}: Send message to telegram')
-                # tlg.send(msg.timetable_message(timetable_dict),info_item['chat_id'], token=cnfg['TOKEN'])
+                tlg.send(msg.timetable_message(timetable_dict),info_item['chat_id'], token=cnfg['TOKEN'])
 
             if info_item['check_scores'] == True:
                 logger.info(f'{datetime.now()}: check_scores = true')

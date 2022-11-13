@@ -81,7 +81,7 @@ def get_timetable(driver):
     table = driver.find_element(By.XPATH, "//table[contains(@class,'list mtop')]/tbody")
     table_data = [[cell.text for cell in row("td")] for row in BeautifulSoup(table.get_attribute("outerHTML"), features="html.parser")("tr")]
     table_data = list(filter(lambda y: y[2] != '- ' and len(y[2].strip())>1, list(
-        map(lambda x: [datetime.strptime(replace_month_in_date(x[0]), '%d %m %Y г.').strftime('%d.%m.%Y'), x[2], x[3]], table_data))))
+        map(lambda x: [datetime.strptime(replace_month_in_date(x[0]), '%d %m %Y г.'), x[2], x[3]], table_data))))
     timetable_dict = {}
     for item in sorted(table_data, key=lambda x:(x[0], x[1], x[2]), reverse=True):
         if item[0] not in timetable_dict:
@@ -92,6 +92,7 @@ def get_timetable(driver):
             timetable_dict[item[0]][item[1]] += ', '+item[2]
 
     timetable_dict = dict(islice(timetable_dict.items(), 3))
+    timetable_dict = {datetime.strftime(k, '%d.%m.%Y'): v for k, v in timetable_dict.items()}
     return timetable_dict, driver
 
 def get_scores_for_user(driver, selector):
